@@ -4,15 +4,21 @@
         <title>羊了个羊3D地图</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-        <link type="text/css" rel="stylesheet" href="main.css">
         <style>
             body {
-                background-color: #ccc;
+                background-color: #cff998;
                 color: #000;
+                overflow: hidden;
             }
 
             a {
                 color: #f00;
+            }
+            * {
+                margin:0;
+            }
+            #info {
+                position: absolute;
             }
         </style>
     </head>
@@ -31,8 +37,8 @@
         <script type="importmap">
             {
                 "imports": {
-                    "three": "../build/three.module.js",
-                    "three/addons/": "./jsm/"
+                    "three": "https://unpkg.com/three@0.145.0/build/three.module.js",
+                    "OrbitControls": "https://unpkg.com/three@0.145.0/examples/jsm/controls/OrbitControls.js"
                 }
             }
         </script>
@@ -41,7 +47,7 @@
 
             import * as THREE from 'three';
 
-            import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+            import { OrbitControls } from 'OrbitControls';
 
             let camera, controls, scene, renderer;
             const raycaster = new THREE.Raycaster();
@@ -190,14 +196,14 @@
                 mouse.x = (event.clientX/window.innerWidth) * 2 - 1;
                 mouse.y = -((event.clientY/window.innerHeight) * 2 - 1);
                 console.log(mouse);
-             
+
                 // 通过鼠标点的位置和当前相机的矩阵计算出raycaster
                 raycaster.setFromCamera( mouse, camera );
-             
+
                 // 获取raycaster直线和所有模型相交的数组集合
                 var intersects = raycaster.intersectObjects( scene.children );
                 //console.log(intersects);
-             
+
                 if (intersects.length > 0) {
                     var object = intersects[0].object;
                     var block_data = map_data['levelData'][object.map_layer][object.map_layer_index];
@@ -235,7 +241,7 @@
             	var currentIndex = removed.length;
             	changeStyle(answer[currentIndex]);
             }
-            
+
             function changeStyle(card_index) {
             	const textureLoader = new THREE.TextureLoader();
                 for (let i = 0; i < scene.children.length; i++) {
@@ -253,7 +259,7 @@
             function bindEvent(){
                 document.getElementById('undo').onclick = undo;
                 document.getElementById('solve').onclick = showAnswer;
-                
+
             }
 
         </script>

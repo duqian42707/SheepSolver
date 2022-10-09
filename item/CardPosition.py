@@ -7,6 +7,7 @@ class CardPosition(object):
         # 当前登记的序号
         self._card_count = 0
 
+    # 添加一层卡牌
     def append_level_card(self, card_list):
         start_index = len(self._origin_data) + 1
         self._append_origin_data(card_list)
@@ -14,6 +15,8 @@ class CardPosition(object):
         new_card_data = {key: self._origin_data[key] for key in range(start_index, end_index)}
         self._handle_overlap_data(new_card_data)
 
+    # 生成可操作牌的数据
+    # 遍历所有原始卡牌数据，如果某个卡牌没有父节点，他就是可操作的卡牌，把他和他的序号放入_head_data对象中
     def generate_head_data(self):
         for key_old, card_old in self._origin_data.items():
             if not card_old.has_parent():

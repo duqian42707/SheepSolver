@@ -11,6 +11,7 @@ class SheepSolver(object):
     def __init__(self):
         self._code_entrance_path = os.path.split(os.path.abspath(sys.argv[0]))[0]
         self._origin_data_file = os.path.join(self._code_entrance_path, "online_data.json")
+        # 读取原始数据
         self._origin_data = FileHelper().read_json_data(self._origin_data_file)
         self._card_count = 0
         self._card_position = CardPosition()
@@ -18,16 +19,22 @@ class SheepSolver(object):
         self._pick_list = []
         self._situation_history = set()
 
+    # 初始化
     def init_card_data(self):
+        # 重新整理原数数据格式
         self._origin_data = dict(sorted(self._origin_data.items(), key=lambda item: int(item[0])))
         for level, level_data in self._origin_data.items():
+            # 循环每一层，计算卡牌总数
             self._card_count += len(level_data)
             card_list = [Card(item) for item in level_data]
+            # 一层一层地追加每层卡牌数据
             self._card_position.append_level_card(card_list)
+        # 生成可操作牌的数据
         self._card_position.generate_head_data()
 
     def solve(self):
         print("当前进度为: {}/{}".format(len(self._pick_list), self._card_count))
+        # 当前顶部可操作的卡牌列表
         head_list = self._card_position.get_head_key_list()
         for head_item in head_list:
             self._operation_pick_card(head_item)
@@ -51,6 +58,7 @@ class SheepSolver(object):
             self._operation_pick_card(pick_index)
             print(self._residual_pool.show_pool_state())
 
+    # 拿牌
     def _operation_pick_card(self, card_index):
         self._card_position.pick_card(card_index)
         card_detail = self._card_position.get_card_detail(card_index)

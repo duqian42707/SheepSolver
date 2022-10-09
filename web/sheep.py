@@ -10,7 +10,7 @@ class Sheep():
         self.seed = [0, 0, 0, 0]
         self.js_code = open("shuffle.js", encoding="utf-8").read()
         self.map_data_path = "./map_data.txt"
-        self.solve_origin_path = "path/to/your/SheepSolver/online_data.json"
+        self.solve_origin_path = "../online_data.json"
 
     def response(self, flow):
         """ 接口响应方法 """
@@ -74,7 +74,7 @@ class Sheep():
 
         # 保存地图数据
         data_string = f"const map_data = {json.dumps(map_data, indent=4)};"
-        save_path = "./three.js/examples/map_data.js"
+        save_path = "./html/map_data.js"
         with open(save_path, "w") as f:
             f.write(data_string)
             f.close()
