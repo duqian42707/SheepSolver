@@ -54,7 +54,7 @@ class Sheep():
             return self.map_data_path
 
     def write_outside_solve_data(self, origin_data):
-        save_path = "path/to/your/SheepSolver/online_data.json"
+        save_path = "../online_data.json"
         solve_map_data = {}
         for level, data_list in origin_data["levelData"].items():
             solve_map_data[level] = []
